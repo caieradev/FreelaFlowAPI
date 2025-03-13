@@ -15,4 +15,5 @@ public class TaskLabelEntity : IEntity
     public DateTime? UpdatedAt { get; set; }
 
     public ICollection<TaskTemplateTaskLabelEntity> TaskTemplateTaskLabel { get; set; } = [];
+    public ICollection<TaskTaskLabelEntity> TaskTaskLabel { get; set; } = [];
 }

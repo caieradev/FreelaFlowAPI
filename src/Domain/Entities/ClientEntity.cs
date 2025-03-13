@@ -18,7 +18,7 @@ public class ClientEntity : IEntity
     public DateTime? UpdatedAt { get; set; }
 
     public ClientBillingEntity? ClientBilling { get; set; }
-    public ICollection<ClientLabelEntity> Labels { get; set; } = [];
+    public ICollection<ClientClientLabelEntity> ClientClientLabels { get; set; } = [];
     public ICollection<ProjectEntity> Projects { get; set; } = [];
     public ICollection<InvoiceEntity> Invoices { get; set; } = [];
 }

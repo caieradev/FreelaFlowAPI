@@ -22,7 +22,7 @@ public class ProjectEntity : IEntity
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
-    public ICollection<ProjectLabelEntity> ProjectLabels { get; set; } = [];
+    public ICollection<ProjectProjectLabelEntity> ProjectProjectLabels { get; set; } = [];
     public ICollection<TaskEntity> Tasks { get; set; } = [];
     public ICollection<ProjectServiceEntity> ProjectServices { get; set; } = [];
     public ICollection<WorkingHoursEntity> WorkingHours { get; set; } = [];

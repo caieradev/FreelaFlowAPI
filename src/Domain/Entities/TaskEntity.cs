@@ -19,6 +19,6 @@ public class TaskEntity : IEntity
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
-    public ICollection<TaskLabelEntity> TaskLabels { get; set; } = [];
+    public ICollection<TaskTaskLabelEntity> TaskTaskLabels { get; set; } = [];
     public ICollection<WorkingHoursEntity> WorkingHours { get; set; } = [];
 }
