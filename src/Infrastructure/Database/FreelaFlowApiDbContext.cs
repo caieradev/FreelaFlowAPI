@@ -9,6 +9,7 @@ public class FreelaFlowApiDbContext(DbContextOptions<FreelaFlowApiDbContext> opt
     public DbSet<ClientClientLabelEntity> ClientClientLabels => Set<ClientClientLabelEntity>();
     public DbSet<ClientEntity> Clients => Set<ClientEntity>();
     public DbSet<ClientLabelEntity> ClientLabels => Set<ClientLabelEntity>();
+    public DbSet<ContactEntity> Contacts => Set<ContactEntity>();
     public DbSet<InvoiceEntity> Invoices => Set<InvoiceEntity>();
     public DbSet<ProjectEntity> Projects => Set<ProjectEntity>();
     public DbSet<ProjectLabelEntity> ProjectLabels => Set<ProjectLabelEntity>();

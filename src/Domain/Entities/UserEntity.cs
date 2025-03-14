@@ -26,4 +26,5 @@ public class UserEntity : IEntity
     public ICollection<InvoiceEntity> Invoices { get; set; } = [];
     public ICollection<ReceiptEntity> Receipts { get; set; } = [];
     public ICollection<WorkHoursEntity> WorkHours { get; set; } = [];
+    public ICollection<ContactEntity> Contacts  { get; set; } = [];
 }
