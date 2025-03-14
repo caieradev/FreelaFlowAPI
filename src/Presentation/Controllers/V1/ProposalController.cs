@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using FreelaFlowApi.Application.Attributes;
 using FreelaFlowApi.Application.DTOs;
 using FreelaFlowApi.Application.Interfaces;
 

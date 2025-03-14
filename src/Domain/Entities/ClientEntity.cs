@@ -21,4 +21,5 @@ public class ClientEntity : IEntity
     public ICollection<ClientClientLabelEntity> ClientClientLabels { get; set; } = [];
     public ICollection<ProjectEntity> Projects { get; set; } = [];
     public ICollection<InvoiceEntity> Invoices { get; set; } = [];
+    public ICollection<TaskEntity> Tasks { get; set; } = [];
 }

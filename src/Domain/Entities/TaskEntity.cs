@@ -11,6 +11,12 @@ public class TaskEntity : IEntity
     public Guid? ProjectId { get; set; }
     public ProjectEntity? Project { get; set; }
     
+    public Guid? ClientId { get; set; }
+    public ClientEntity? Client { get; set; }
+
+    public Guid? ParentTaskId { get; set; }
+    public TaskEntity? ParentTask { get; set; }
+    
     public string Title { get; set; }
     public string? Description { get; set; }
     public TaskStatusEnum Status { get; set; }
@@ -21,4 +27,5 @@ public class TaskEntity : IEntity
 
     public ICollection<TaskTaskLabelEntity> TaskTaskLabels { get; set; } = [];
     public ICollection<WorkingHoursEntity> WorkingHours { get; set; } = [];
+    public ICollection<TaskEntity> SubTasks { get; set; } = [];
 }
