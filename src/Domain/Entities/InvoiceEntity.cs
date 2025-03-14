@@ -5,13 +5,13 @@ public class InvoiceEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserEntity? User { get; set; }
+    public UserEntity User { get; set; } = new();
     
     public Guid ClientId { get; set; }
-    public ClientEntity? Client { get; set; }
+    public ClientEntity Client { get; set; } = new();
     
     public decimal Amount { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
     public bool Paid { get; set; } = false;
     
     public bool Active { get; set; } = true;

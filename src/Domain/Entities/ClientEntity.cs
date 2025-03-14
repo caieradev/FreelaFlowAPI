@@ -6,7 +6,7 @@ public class ClientEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserEntity User { get; set; }
+    public UserEntity User { get; set; } = new();
     
     public string Name { get; set; }
     public string Email { get; set; }
@@ -17,7 +17,7 @@ public class ClientEntity : IEntity
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 
-    public ICollection<ContactEntity> Contacts { get; set; }
+    public ICollection<ContactEntity> Contacts { get; set; } = [];
 
     public ClientBillingEntity? ClientBilling { get; set; }
     public ICollection<ClientClientLabelEntity> ClientClientLabels { get; set; } = [];

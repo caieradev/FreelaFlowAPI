@@ -6,10 +6,10 @@ public class ProjectProjectLabelEntity : IEntity
     public Guid Id { get; set; }
     
     public Guid ProjectId { get; set; }
-    public ProjectEntity? Project { get; set; }
+    public ProjectEntity Project { get; set; } = new();
     
     public Guid ProjectLabelId { get; set; }
-    public ProjectLabelEntity? ProjectLabel { get; set; }
+    public ProjectLabelEntity ProjectLabel { get; set; } = new();
     
     public bool Active { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

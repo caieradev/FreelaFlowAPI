@@ -6,13 +6,13 @@ public class ProjectEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserEntity? User { get; set; }
+    public UserEntity User { get; set; } = new();
     
     public Guid ClientId { get; set; }
-    public ClientEntity? Client { get; set; }
+    public ClientEntity Client { get; set; } = new();
     
     public string Name { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
     public ProjectStatusEnum Status { get; set; }
     public decimal? FixedPrice { get; set; }
     public decimal? HourlyRate { get; set; }

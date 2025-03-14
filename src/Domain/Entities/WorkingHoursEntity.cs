@@ -7,10 +7,10 @@ public class WorkHoursEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserEntity? User { get; set; }
+    public UserEntity User { get; set; } = new();
     
     public Guid? ProjectId { get; set; }
-    public ProjectEntity? Project { get; set; }
+    public ProjectEntity Project { get; set; } = new();
     
     public Guid? TaskId { get; set; }
     public TaskEntity? Task { get; set; }

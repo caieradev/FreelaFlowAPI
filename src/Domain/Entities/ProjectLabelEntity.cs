@@ -5,7 +5,7 @@ public class ProjectLabelEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
-    public UserEntity? User { get; set; }
+    public UserEntity User { get; set; } = new();
     
     public string Name { get; set; }
     public string Color { get; set; }

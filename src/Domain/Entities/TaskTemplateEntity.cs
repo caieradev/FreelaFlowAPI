@@ -5,7 +5,7 @@ public class TaskTemplateEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid ServiceId { get; set; }
-    public ServiceEntity? Service { get; set; }
+    public ServiceEntity Service { get; set; } = new();
 
     public bool Active { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
