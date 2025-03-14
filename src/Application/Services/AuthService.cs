@@ -11,8 +11,8 @@ public class AuthService(IHttpContextAccessor httpContextAccessor, IAuthClient a
 {
     private readonly IAuthClient _authClient = authClient;
     private readonly IUserRepository _userRepository = userRepository;
-    public async Task<UserDetailsDTO> RegisterAsync(string idToken, string externalUserId, string password) =>
-        UserDetailsDTO.FromEntity(await this.PerformUserRegisterAsync(idToken, externalUserId, password));
+    public async Task<UserDTO> RegisterAsync(string idToken, string externalUserId, string password) =>
+        UserDTO.FromEntity(await this.PerformUserRegisterAsync(idToken, externalUserId, password));
 
     public async Task<UserEntity> PerformUserRegisterAsync(string idToken, string externalUserId, string password)
     {

@@ -2,7 +2,7 @@ using FreelaFlowApi.Domain.Entities;
 using FreelaFlowApi.Domain.Enums;
 
 namespace FreelaFlowApi.Application.DTOs;
-public class UserDetailsDTO
+public class UserDTO
 {
     public int? id { get; set; }
     public string externalUserId { get; set; }
@@ -13,7 +13,7 @@ public class UserDetailsDTO
     public bool active { get; set; }
     public UserRoleEnum? role { get; set; }
 
-    internal static UserDetailsDTO FromEntity(UserEntity entity) =>
+    internal static UserDTO FromEntity(UserEntity entity) =>
         new()
         {
             // id = entity.Id,
