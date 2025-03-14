@@ -26,6 +26,6 @@ public class TaskEntity : IEntity
     public DateTime? UpdatedAt { get; set; }
 
     public ICollection<TaskTaskLabelEntity> TaskTaskLabels { get; set; } = [];
-    public ICollection<WorkingHoursEntity> WorkingHours { get; set; } = [];
+    public ICollection<WorkHoursEntity> WorkHours { get; set; } = [];
     public ICollection<TaskEntity> SubTasks { get; set; } = [];
 }

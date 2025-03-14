@@ -25,5 +25,5 @@ public class ProjectEntity : IEntity
     public ICollection<ProjectProjectLabelEntity> ProjectProjectLabels { get; set; } = [];
     public ICollection<TaskEntity> Tasks { get; set; } = [];
     public ICollection<ProjectServiceEntity> ProjectServices { get; set; } = [];
-    public ICollection<WorkingHoursEntity> WorkingHours { get; set; } = [];
+    public ICollection<WorkHoursEntity> WorkHours { get; set; } = [];
 }

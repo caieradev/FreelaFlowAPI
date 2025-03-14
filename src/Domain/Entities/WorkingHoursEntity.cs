@@ -3,7 +3,7 @@ using FreelaFlowApi.Domain.Enums;
 
 namespace FreelaFlowApi.Domain.Entities;
 
-public class WorkingHoursEntity : IEntity
+public class WorkHoursEntity : IEntity
 {
     public Guid Id { get; set; }
     public Guid UserId { get; set; }
@@ -17,7 +17,7 @@ public class WorkingHoursEntity : IEntity
     
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
-    public TimeSpan Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
     public WorkHourCategoryEnum Category { get; set; }
     public string? Notes { get; set; }
     

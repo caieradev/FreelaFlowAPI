@@ -8,4 +8,7 @@ public interface ITaskService : IScoped
     Task<TaskDTO> Create(CreateTaskRequestDTO id);
     Task<TaskDTO> Update(Guid id, UpdateTaskRequestDTO dto);
     Task Delete(Guid id);
+    Task AddLabel(Guid id, IdDTO dto);
+    Task RemoveLabel(Guid id, Guid labelId);
+    Task AssignTask(Guid id, AssignTaskDTO dto);
 }

@@ -23,7 +23,7 @@ public class FreelaFlowApiDbContext(DbContextOptions<FreelaFlowApiDbContext> opt
     public DbSet<TaskTemplateTaskLabelEntity> TaskTemplateTaskLabels => Set<TaskTemplateTaskLabelEntity>();
     public DbSet<UserBillingEntity> UserBillings => Set<UserBillingEntity>();
     public DbSet<UserEntity> Users => Set<UserEntity>();
-    public DbSet<WorkingHoursEntity> WorkingHourses => Set<WorkingHoursEntity>();
+    public DbSet<WorkHoursEntity> WorkHourses => Set<WorkHoursEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
