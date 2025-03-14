@@ -26,7 +26,7 @@ public class ClientController(IClientService service) : BaseController<IClientSe
     
     [HttpPut("{id}")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> Create(Guid id, [FromBody] UpdateClientRequestDTO dto) =>
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateClientRequestDTO dto) =>
         Ok(new ResponseDTO { data = await _mainService.Update(id, dto) });
     
     [HttpDelete("{id}")]

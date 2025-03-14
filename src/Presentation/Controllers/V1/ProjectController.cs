@@ -26,7 +26,7 @@ public class ProjectController(IProjectService service) : BaseController<IProjec
     
     [HttpPut("{id}")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> Create(Guid id, [FromBody] UpdateProjectRequestDTO dto) =>
+    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProjectRequestDTO dto) =>
         Ok(new ResponseDTO { data = await _mainService.Update(id, dto) });
     
     [HttpDelete("{id}")]
