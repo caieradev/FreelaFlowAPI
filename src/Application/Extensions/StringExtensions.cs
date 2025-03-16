@@ -1,5 +1,7 @@
+using System.Text.RegularExpressions;
+
 namespace FreelaFlowApi.Application.Extensions;
-public static class StringExtensions
+public static partial class StringExtensions
 {
     public static int? TryParseInt32(this string? intMaybe) =>
         int.TryParse(intMaybe, out var result) ? result : null;
@@ -9,7 +11,7 @@ public static class StringExtensions
         if (string.IsNullOrWhiteSpace(cpf))
             return false;
 
-        cpf = cpf.Trim().Replace(".", "").Replace("-", "");
+        cpf = CPFRegex().Replace(cpf.Trim(), "");
 
         if (cpf.Length != 11)
             return false;
@@ -35,7 +37,7 @@ public static class StringExtensions
         if (string.IsNullOrWhiteSpace(cnpj))
             return false;
 
-        cnpj = cnpj.Trim().Replace(".", "").Replace("-", "").Replace("/", "");
+        cnpj = CNPJRegex().Replace(cnpj.Trim(), "");
 
         if (cnpj.Length != 14)
             return false;
@@ -56,6 +58,32 @@ public static class StringExtensions
         return cnpj.EndsWith($"{firstDigit}{secondDigit}");
     }
 
-    public static bool ValidIdDocument(this string idDocument) =>
+    public static bool IsValidIdDocument(this string idDocument) =>
         idDocument.ValidCPF() || idDocument.ValidCNPJ();
+
+    public static bool IsValidPhoneNumber(this string phone)
+    {
+        if (string.IsNullOrWhiteSpace(phone))
+            return false;
+
+        phone = PhoneRegex().Replace(phone, "").Trim();
+
+        return phone.Length switch
+        {
+            10 => phone.All(char.IsDigit),
+            11 => phone.Length > 2 && phone.All(char.IsDigit) && phone[2] == '9',
+            _ => false
+        };
+    }
+
+    public static bool IsValidZipCode(this string zipCode) =>
+        zipCode.Length == 8 && zipCode.All(char.IsDigit);
+
+    // This attribute generates a Regex object for the specified pattern at compile time
+    [GeneratedRegex(@"[\(\)\-\s]")]
+    private static partial Regex PhoneRegex();
+    [GeneratedRegex(@"[.\-\/]")]
+    private static partial Regex CNPJRegex();
+    [GeneratedRegex(@"[.\-]")]
+    private static partial Regex CPFRegex();
 }

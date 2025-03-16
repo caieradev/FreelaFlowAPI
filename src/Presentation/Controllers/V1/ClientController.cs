@@ -38,40 +38,33 @@ public class ClientController(IClientService service) : BaseController<IClientSe
     
     [HttpPost("{id}/labels")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> AddLabel(Guid id, [FromBody] IdDTO dto)
+    public async Task<IActionResult> UpdateLabels(Guid id, [FromBody] LabelsDTO dto)
     {
-        await _mainService.AddLabel(id, dto);
-        return Ok(new ResponseDTO { displayMessage = "Label adicionada com sucesso!" });
-    }
-    
-    [HttpDelete("{id}/labels/{labelId}")]
-    [MapToApiVersion("1.0")]
-    public async Task<IActionResult> RemoveLabel(Guid id, Guid labelId)
-    {
-        await _mainService.RemoveLabel(id, labelId);
-        return Ok(new ResponseDTO { displayMessage = "Label removida com sucesso!" });
+        await _mainService.UpdateLabels(id, dto);
+        return Ok(new ResponseDTO { displayMessage = "Labels atualizadas com sucesso!" });
     }
     
     [HttpPost("{id}/billing")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> AddBiling(Guid id, [FromBody] CreateClientBillingRequestDTO dto)
+    public async Task<IActionResult> AddBilling(Guid id, [FromBody] ClientBillingRequestDTO dto)
     {
-        await _mainService.AddBiling(id, dto);
+        await _mainService.AddBilling(id, dto);
         return Ok(new ResponseDTO { displayMessage = "Informações de cobrança adicionadas com sucesso!" });
     }
-    [HttpPut("{id}/billing/{billingId}")]
+
+    [HttpPut("{id}/billing")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> UpdateBiling(Guid id, Guid billingId, [FromBody] UpdateClientBillingRequestDTO dto)
+    public async Task<IActionResult> UpdateBilling(Guid id, [FromBody] ClientBillingRequestDTO dto)
     {
-        await _mainService.UpdateBiling(id, billingId, dto);
+        await _mainService.UpdateBilling(id, dto);
         return Ok(new ResponseDTO { displayMessage = "Informações de cobrança atualizadas com sucesso!" });
     }
     
-    [HttpDelete("{id}/billing/{billingId}")]
+    [HttpDelete("{id}/billing")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> RemoveBilling(Guid id, Guid billingId)
+    public async Task<IActionResult> RemoveBilling(Guid id)
     {
-        await _mainService.RemoveBilling(id, billingId);
+        await _mainService.RemoveBilling(id);
         return Ok(new ResponseDTO { displayMessage = "Informações de cobrança removidas com sucesso!" });
     }
 }

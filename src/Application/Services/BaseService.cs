@@ -14,4 +14,6 @@ public abstract class BaseService(IHttpContextAccessor httpContextAccessor)
 
         return (T)Convert.ChangeType(claim.Value, typeof(T));
     }
+
+    protected Guid GetUserId() => GetUserSessionClaim<Guid>(ClaimEnum.IUId);
 }

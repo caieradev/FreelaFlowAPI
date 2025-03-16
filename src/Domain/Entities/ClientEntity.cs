@@ -10,7 +10,7 @@ public class ClientEntity : IEntity
     
     public string Name { get; set; }
     public string Email { get; set; }
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
     public ClientCategoryEnum Category { get; set; }
     
     public bool Active { get; set; } = true;

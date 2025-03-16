@@ -8,9 +8,8 @@ public interface IClientService : IScoped
     Task<ClientDTO> Create(CreateClientRequestDTO dto);
     Task<ClientDTO> Update(Guid id, UpdateClientRequestDTO dto);
     Task Delete(Guid id);
-    Task AddLabel(Guid id, IdDTO dto);
-    Task RemoveLabel(Guid id, Guid labelId);
-    Task AddBiling(Guid id, CreateClientBillingRequestDTO dto);
-    Task UpdateBiling(Guid id, Guid billingId, UpdateClientBillingRequestDTO dto);
-    Task RemoveBilling(Guid id, Guid billingId);
+    Task UpdateLabels(Guid id, LabelsDTO labelsDto);
+    Task AddBilling(Guid id, ClientBillingRequestDTO dto);
+    Task UpdateBilling(Guid id, ClientBillingRequestDTO dto);
+    Task RemoveBilling(Guid id);
 }
