@@ -1,4 +1,5 @@
 using FreelaFlowApi.Application.DTOs;
+using FreelaFlowApi.Domain.Entities;
 
 namespace FreelaFlowApi.Application.Interfaces;
 public interface IClientService : IScoped
@@ -12,4 +13,5 @@ public interface IClientService : IScoped
     Task AddBilling(Guid id, ClientBillingRequestDTO dto);
     Task UpdateBilling(Guid id, ClientBillingRequestDTO dto);
     Task RemoveBilling(Guid id);
+    Task<ClientEntity> GetClientByIdAndValidateAccess(Guid id, bool complete = false, bool withLabels = false, bool withBilling = false);
 }

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Transactions;
 using FreelaFlowApi.Application.DTOs;
 using FreelaFlowApi.Application.Exceptions;
 using FreelaFlowApi.Application.Extensions;
@@ -6,12 +7,16 @@ using FreelaFlowApi.Application.Interfaces;
 using FreelaFlowApi.Domain.Entities;
 
 namespace FreelaFlowApi.Application.Services;
-public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepository clientRepository) : BaseService(httpContextAccessor), IClientService
+public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepository clientRepository, IProjectRepository projectRepository) : BaseService(httpContextAccessor), IClientService
 {
     private readonly IClientRepository _clientRepository = clientRepository;
-    public async Task<IEnumerable<ClientItemDTO>> GetAll() =>
-        (await _clientRepository.GetAll(GetUserId()))
-            .Select(ClientItemDTO.FromEntity);
+    private readonly IProjectRepository _projectRepository = projectRepository;
+    
+    public async Task<IEnumerable<ClientItemDTO>> GetAll()
+    {
+        var clients = await _clientRepository.GetAll(GetUserId());
+        return clients.Select(ClientItemDTO.FromEntity);
+    }
 
     public async Task AddBilling(Guid clientId, ClientBillingRequestDTO dto)
     {
@@ -55,15 +60,17 @@ public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepo
     {
         await GetClientByIdAndValidateAccess(id);
 
-        await _clientRepository.Delete(id);
+        using (TransactionScope ts = new(TransactionScopeAsyncFlowOption.Enabled))
+        {
+            await _projectRepository.DeleteByClientId(id);
+            await _clientRepository.Delete(id);
+
+            ts.Complete();
+        }
     }
 
-    public async Task<ClientDTO> GetById(Guid id)
-    {
-        var entity = await GetClientByIdAndValidateAccess(id, complete: true);
-        
-        return ClientDTO.FromEntity(entity);
-    }
+    public async Task<ClientDTO> GetById(Guid id) =>
+        ClientDTO.FromEntity(await GetClientByIdAndValidateAccess(id, complete: true));
 
     public async Task RemoveBilling(Guid clientId)
     {
@@ -128,7 +135,7 @@ public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepo
             throw new MessageException("CEP inválido!");
     }
 
-    private async Task<ClientEntity> GetClientByIdAndValidateAccess(Guid id, bool complete = false, bool withLabels = false, bool withBilling = false)
+    public async Task<ClientEntity> GetClientByIdAndValidateAccess(Guid id, bool complete = false, bool withLabels = false, bool withBilling = false)
     {
         var entity = (complete ? 
             await _clientRepository.GetByIdComplete(id) : 
@@ -139,6 +146,4 @@ public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepo
             throw new MessageException("Você não tem acesso a esse cliente!");
         return entity;
     }
-
-    
 }

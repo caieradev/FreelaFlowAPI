@@ -14,4 +14,12 @@ public struct LabelDTO
             name = clientLabel.Name,
             color = clientLabel.Color
         };
+
+    internal static LabelDTO FromEntity(ProjectLabelEntity projectLabel) =>
+        new()
+        {
+            id = projectLabel.Id,
+            name = projectLabel.Name,
+            color = projectLabel.Color
+        };
 }

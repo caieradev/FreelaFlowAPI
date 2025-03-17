@@ -5,10 +5,9 @@ public interface IProjectService : IScoped
 {
     Task<IEnumerable<ProjectItemDTO>> GetAll();
     Task<ProjectDTO> GetById(Guid id);
-    Task<ProjectDTO> Create(CreateProjectRequestDTO id);
-    Task<ProjectDTO> Update(Guid id, UpdateProjectRequestDTO dto);
+    Task<ProjectDTO> Create(ProjectRequestDTO id);
+    Task<ProjectDTO> Update(Guid id, ProjectRequestDTO dto);
     Task Delete(Guid id);
-    Task AddLabel(Guid id, IdDTO dto);
-    Task RemoveLabel(Guid id, Guid labelId);
-    Task AddBiling(Guid id, ProjectStatusDTO dto);
+    Task UpdateLabels(Guid id, LabelsDTO dto);
+    Task SetStatus(Guid id, ProjectStatusDTO dto);
 }
