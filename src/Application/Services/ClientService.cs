@@ -7,10 +7,11 @@ using FreelaFlowApi.Application.Interfaces;
 using FreelaFlowApi.Domain.Entities;
 
 namespace FreelaFlowApi.Application.Services;
-public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepository clientRepository, IProjectRepository projectRepository) : BaseService(httpContextAccessor), IClientService
+public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepository clientRepository, IProjectRepository projectRepository, IProposalRepository proposalRepository) : BaseService(httpContextAccessor), IClientService
 {
     private readonly IClientRepository _clientRepository = clientRepository;
     private readonly IProjectRepository _projectRepository = projectRepository;
+    private readonly IProposalRepository _proposalRepository = proposalRepository;
     
     public async Task<IEnumerable<ClientItemDTO>> GetAll()
     {
@@ -60,13 +61,13 @@ public class ClientService(IHttpContextAccessor httpContextAccessor, IClientRepo
     {
         await GetClientByIdAndValidateAccess(id);
 
-        using (TransactionScope ts = new(TransactionScopeAsyncFlowOption.Enabled))
-        {
-            await _projectRepository.DeleteByClientId(id);
-            await _clientRepository.Delete(id);
+        using TransactionScope ts = new(TransactionScopeAsyncFlowOption.Enabled);
+        await _proposalRepository.DeleteAllFromClient(id);
+        await _projectRepository.DeleteByClientId(id);
+        await _clientRepository.Delete(id);
 
-            ts.Complete();
-        }
+        ts.Complete();
+        ts.Dispose();
     }
 
     public async Task<ClientDTO> GetById(Guid id) =>

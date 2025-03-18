@@ -1,13 +1,13 @@
 namespace FreelaFlowApi.Domain.Enums;
 public enum WorkHourCategoryEnum
 {
-    Analysis,
-    Working,
-    Management,
-    Meeting,
-    Testing,
-    Reviewing,
-    Documentation,
-    Research,
-    Other
+    Análise,
+    Trabalho,
+    Gerencia,
+    Reunião,
+    Teste,
+    Revisão,
+    Documentação,
+    Pesquisa,
+    Outro
 }

@@ -10,8 +10,8 @@ public class ProposalController(IProposalService service) : BaseController<IProp
 {
     [HttpGet]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> GetAll() =>
-        Ok(new ResponseDTO { data = await _mainService.GetAll() });
+    public async Task<IActionResult> GetAll([FromQuery] Guid clientId) =>
+        Ok(new ResponseDTO { data = await _mainService.GetAllFromProject(clientId) });
     
     [HttpGet("{id}")]
     [MapToApiVersion("1.0")]
@@ -20,12 +20,12 @@ public class ProposalController(IProposalService service) : BaseController<IProp
     
     [HttpPost]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> Create(CreateProposalRequestDTO dto) =>
+    public async Task<IActionResult> Create(ProposalRequestDTO dto) =>
         Ok(new ResponseDTO { data = await _mainService.Create(dto) });
     
     [HttpPut("{id}")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProposalRequestDTO dto) =>
+    public async Task<IActionResult> Update(Guid id, [FromBody] ProposalRequestDTO dto) =>
         Ok(new ResponseDTO { data = await _mainService.Update(id, dto) });
     
     [HttpDelete("{id}")]
@@ -36,13 +36,21 @@ public class ProposalController(IProposalService service) : BaseController<IProp
         return Ok(new ResponseDTO { displayMessage = "Proposta deletada com sucesso!" });
     }
     
-    [HttpPost("{id}/send")]
+    [HttpPost("{id}")]
     [MapToApiVersion("1.0")]
-    public async Task<IActionResult> SendToClient(Guid id)
+    public async Task<IActionResult> SetStatus(Guid id, ProposalStatusDTO dto)
     {
-        await _mainService.SendToClient(id);
-        return Ok(new ResponseDTO { displayMessage = "Proposta enviada com sucesso!" });
+        await _mainService.SetStatus(id, dto);
+        return Ok(new ResponseDTO { displayMessage = "Proposta deletada com sucesso!" });
     }
+    
+    // [HttpPost("{id}/send")]
+    // [MapToApiVersion("1.0")]
+    // public async Task<IActionResult> SendToClient(Guid id)
+    // {
+    //     await _mainService.SendToClient(id);
+    //     return Ok(new ResponseDTO { displayMessage = "Proposta enviada com sucesso!" });
+    // }
     
     [HttpPost("{id}/response")]
     [MapToApiVersion("1.0")]

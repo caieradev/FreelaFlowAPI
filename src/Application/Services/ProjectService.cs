@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Transactions;
 using FreelaFlowApi.Application.DTOs;
 using FreelaFlowApi.Application.Exceptions;
 using FreelaFlowApi.Application.Extensions;
@@ -6,10 +7,11 @@ using FreelaFlowApi.Application.Interfaces;
 using FreelaFlowApi.Domain.Entities;
 
 namespace FreelaFlowApi.Application.Services;
-public class ProjectService(IHttpContextAccessor httpContextAccessor, IProjectRepository projectRepository, IClientService clientService) : BaseService(httpContextAccessor), IProjectService
+public class ProjectService(IHttpContextAccessor httpContextAccessor, IProjectRepository projectRepository, IClientService clientService, IProposalRepository proposalRepository) : BaseService(httpContextAccessor), IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IClientService _clientService = clientService;
+    private readonly IProposalRepository _proposalRepository = proposalRepository;
 
     public async Task SetStatus(Guid id, ProjectStatusDTO dto)
     {
@@ -30,8 +32,15 @@ public class ProjectService(IHttpContextAccessor httpContextAccessor, IProjectRe
 
     public async Task Delete(Guid id)
     {
+        if (id == Guid.Empty)
+            throw new DebugMessageException("ProjectId é obrigatório!");
         var project = await GetProjectAndValidateAccess(id);
+
+        using TransactionScope ts = new(TransactionScopeAsyncFlowOption.Enabled);
+        await _proposalRepository.DeleteAllFromProject(id);
         await _projectRepository.Delete(project);
+        ts.Complete();
+        ts.Dispose();
     }
 
     public async Task<IEnumerable<ProjectItemDTO>> GetAll()
@@ -73,7 +82,7 @@ public class ProjectService(IHttpContextAccessor httpContextAccessor, IProjectRe
         await _projectRepository.UpdateLabels(id, labelsAdd, labelIdsToRemove);  
     }
 
-    private async Task<ProjectEntity> GetProjectAndValidateAccess(Guid projectId, bool complete = false, bool withLabels = false, bool withServices = false)
+    public async Task<ProjectEntity> GetProjectAndValidateAccess(Guid projectId, bool complete = false, bool withLabels = false, bool withServices = false)
     {
         var entity = (complete ? 
             await _projectRepository.GetByIdComplete(projectId) : 
